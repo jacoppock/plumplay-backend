@@ -1,0 +1,90 @@
+[tool.poetry]
+name = "plumplay-backend"
+version = "0.1.0"
+description = "Your project description"
+authors = ["Your Name <you@example.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+django = "~4.2.10"
+django-ninja = "~0.22"
+django-extensions = "~3.2.3"
+psycopg2-binary = "~2.9"
+python-json-logger = "~2.0.7"
+typing-extensions = "~4.9.0"
+uvicorn = "~0.23"
+openai = "~1.35.7"
+requests = "~2.31.0"
+chardet = "~5.2.0"
+responses = "~0.25.0"
+dateparser = "~1.2.0"
+types-dateparser = "~1.1.4"
+
+[tool.poetry.dev-dependencies]
+black = "~24.3.0"
+certifi = "~2023.11.17"
+dirty-equals = "~0.7"
+django-types = "~0.19.0"
+isort = "~5.12.0"
+mypy = "~1.8.0"
+pytest = "~7.4.2"
+python-dotenv = "~1.0.1"
+pytest-asyncio = "~0.23"
+pytest-cov = "~4.1.0"
+pytest_mock = "~3.12.0"
+pytest-django = "~4.5.2"
+ruff = "~0.0.290"
+respx = "~0.20.0"
+types-requests = "*"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+# Retain other existing sections as needed
+[tool.black]
+line-length = 120
+target-version = ["py310"]
+
+[tool.isort]
+profile = "black"
+
+[tool.mypy]
+strict = true
+ignore_missing_imports = true
+warn_return_any = false
+warn_unused_ignores = false
+
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "base.test_settings"
+addopts = "-v --disable-warnings --cov-report html --cov-report=term:skip-covered --cov=src"
+pythonpath = ["src"]
+testpaths = "tests"
+collect_ignore = ["manage.py"]
+
+[tool.coverage.run]
+omit = [
+    "src/server.py",
+    "src/manage.py",
+    "src/base/asgi.py",
+    "src/base/logging_config.py",
+    "src/base/prod_settings.py",
+    "src/core/urls.py"
+]
+
+[tool.ruff]
+line-length = 120
+select = [
+    "E",  # pycodestyle errors
+    "W",  # pycodestyle warnings
+    "F",  # pyflakes
+    "I",  # isort
+    "C",  # flake8-comprehensions
+    "B",  # flake8-bugbear
+]
+ignore = [
+    "E501",  # line too long, handled by black
+    "B008",  # do not perform function calls in argument defaults
+    "C901",  # too complex
+    "I001",  # conflicts with isort
+]
