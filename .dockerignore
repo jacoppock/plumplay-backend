@@ -1,0 +1,14 @@
+# .dockerignore
+
+__pycache__/
+*.py[cod]
+.env
+.venv
+env/
+venv/
+ENV/
+*.log
+db.sqlite3
+*.egg-info/
+dist/
+build/
