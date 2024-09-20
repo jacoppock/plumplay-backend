@@ -29,17 +29,18 @@ RUN python -m venv $VIRTUAL_ENV
 
 # Install project dependencies
 RUN poetry config virtualenvs.in-project true
-RUN poetry install --no-dev --no-interaction --no-ansi
+RUN poetry install --no-interaction --no-ansi
 
 COPY wait-for-it.sh /app/wait-for-it.sh
-# Copy project files
+RUN chmod +x /app/wait-for-it.sh
 COPY src/ /app/src/
 
 # Set the working directory to where manage.py is located
-WORKDIR /app/src
+# WORKDIR /app/src/backend
 
 # Collect static files
-RUN python manage.py collectstatic --noinput
+RUN python src/backend/manage.py collectstatic --noinput
+
 
 # Expose the application port
 EXPOSE 8000

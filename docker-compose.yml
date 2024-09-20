@@ -3,7 +3,9 @@ version: '3.8'
 
 services:
   web:
-    build: .
+    build:
+      context: .
+      dockerfile: docker/backend.dockerfile
     volumes:
       - ./src:/app/src
       - static_volume:/app/src/staticfiles
@@ -23,15 +25,16 @@ services:
     command: >
       sh -c "
         ./wait-for-it.sh db:5432 --timeout=30 --strict --
-        python manage.py migrate &&
-        python manage.py collectstatic --noinput &&
-        python manage.py runserver 0.0.0.0:8000
+        python src/backend/manage.py migrate &&
+        python src/backend/manage.py collectstatic --noinput &&
+        python src/backend/manage.py runserver 0.0.0.0:8000
       "
 
   db:
     image: postgres:13
     volumes:
       - postgres_data:/var/lib/postgresql/data/
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
     environment:
       POSTGRES_DB: ${DATABASE_NAME}
       POSTGRES_USER: ${DATABASE_USER}

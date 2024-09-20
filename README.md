@@ -1,6 +1,21 @@
-# plumplay-backend
+# PlumPlay Backend with FooMedical Frontend
 
-PlumPlay Backend is a Django-based web application that serves as the backend for the PlumPlay project.
+## Running the Application
+
+1. Build and start the Docker containers:
+   ```
+   make start-all
+   ```
+
+2. Access the frontend at `http://localhost:3000`
+3. Access the backend API at `http://localhost:8000`
+
+## Development
+
+- Frontend code is located in `src/frontend`
+- Backend code is located in `src/backend`
+
+Refer to the respective README files in each directory for more detailed instructions.
 
 ## Prerequisites
 

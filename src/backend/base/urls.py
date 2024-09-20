@@ -16,8 +16,12 @@ Including another URLconf
 """
 
 from django.contrib import admin
-from django.urls import path
+from django.urls import include, path  # Ensure 'include' is imported
+
+from . import views  # If you have views in base
 
 urlpatterns = [
+    path("", views.home, name="home"),  # If you have a home view
     path("admin/", admin.site.urls),
+    path("ai_processor/", include("ai_processor.urls")),  # Include ai_processor URLs
 ]

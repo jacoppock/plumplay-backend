@@ -11,7 +11,7 @@ PYTHON := python3
 VENV := venv
 PIP := $(VENV)/bin/pip
 PYTHON_VENV := $(VENV)/bin/python
-DJANGO_MANAGE := $(PYTHON_VENV) src/manage.py
+DJANGO_MANAGE := $(PYTHON_VENV) src/backend/manage.py
 
 # Default target
 help:
@@ -44,7 +44,7 @@ down: ## Stop Docker containers
 	$(DC) down
 
 start:
-	docker compose --env-file=.env up --build -d
+	$(DC) --env-file=.env up --build -d
 
 restart: down up ## Restart Docker containers
 
@@ -52,9 +52,12 @@ logs: ## View Docker container logs
 	$(DC) logs -f
 
 migrate: ## Apply database migrations
-	$(DC) exec web $(DJANGO_MANAGE) migrate
+	$(DC) exec web python $(DJANGO_MANAGE) migrate
 
-createsuperuser: ## Create a Django superuser
+makemigrations:
+	$(DC) exec web python $(DJANGO_MANAGE) makemigrations
+
+superuser: ## Create a Django superuser
 	$(DC) exec web $(DJANGO_MANAGE) createsuperuser
 
 collectstatic: ## Collect static files
@@ -84,3 +87,14 @@ check-api-docs: ## Check if API docs are up to date
 	@$(DJANGO_MANAGE) export_openapi_schema --api base.urls.api_v1 --output docs/openapi_new.json
 	@diff docs/openapi.json docs/openapi_new.json || (echo "API docs are out of date. Run 'make api-docs' to update." && exit 1)
 	@rm docs/openapi_new.json
+
+frontend-install: ## Install frontend dependencies
+	cd src/frontend && npm install
+
+frontend-start: ## Start frontend
+	cd src/frontend && npm run dev
+
+frontend-build: ## Build frontend
+	cd src/frontend && npm run build
+
+start-all: start frontend-start

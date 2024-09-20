@@ -1,8 +1,10 @@
+from typing import Any
+
 from .settings import *  # noqa: F401, F403
 
 DEBUG = False
 
-DATABASES = {
+DATABASES: dict[str, Any] = {  # type: ignore
     "default": {
         "ENGINE": "django.db.backends.postgresql",
         "NAME": "plumplay-db",

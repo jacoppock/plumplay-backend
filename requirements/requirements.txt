@@ -39,10 +39,15 @@ authlib==1.3.2
     # via plumplay-backend (pyproject.toml)
 azure-core==1.31.0
     # via
+    #   azure-identity
     #   azure-storage-blob
     #   django-storages
+azure-identity==1.17.1
+    # via llama-index-llms-azure-openai
 azure-storage-blob==12.22.0
-    # via django-storages
+    # via
+    #   django-storages
+    #   plumplay-backend (pyproject.toml)
 beautifulsoup4==4.12.3
     # via llama-index-readers-file
 billiard==3.6.4.0
@@ -56,7 +61,6 @@ certifi==2024.8.30
     #   faxplus-api
     #   httpcore
     #   httpx
-    #   plumplay-backend (pyproject.toml)
     #   requests
 cffi==1.17.1
     # via
@@ -81,11 +85,10 @@ click-repl==0.3.0
 cryptography==41.0.7
     # via
     #   authlib
+    #   azure-identity
     #   azure-storage-blob
     #   msal
-    #   plumplay-backend (pyproject.toml)
     #   pyjwt
-    #   social-auth-core
 dapr==1.14.0
     # via plumplay-backend (pyproject.toml)
 dataclasses-json==0.6.7
@@ -95,10 +98,7 @@ dataclasses-json==0.6.7
 dateparser==1.2.0
     # via plumplay-backend (pyproject.toml)
 defusedxml==0.8.0rc2
-    # via
-    #   fpdf2
-    #   python3-openid
-    #   social-auth-core
+    # via fpdf2
 deprecated==1.2.14
     # via
     #   llama-index-core
@@ -117,7 +117,6 @@ django==4.2.16
     #   django-ninja
     #   django-storages
     #   plumplay-backend (pyproject.toml)
-    #   social-auth-app-django
 django-auto-logout==0.5.1
     # via plumplay-backend (pyproject.toml)
 django-ckeditor==6.7.1
@@ -181,6 +180,7 @@ httpx==0.27.2
     #   llama-cloud
     #   llama-index-core
     #   llama-index-legacy
+    #   llama-index-llms-azure-openai
     #   openai
 idna==3.10
     # via
@@ -206,7 +206,6 @@ llama-index==0.11.10
 llama-index-agent-openai==0.3.1
     # via
     #   llama-index
-    #   llama-index-llms-openai
     #   llama-index-program-openai
 llama-index-cli==0.3.1
     # via llama-index
@@ -215,8 +214,10 @@ llama-index-core==0.11.10
     #   llama-index
     #   llama-index-agent-openai
     #   llama-index-cli
+    #   llama-index-embeddings-azure-openai
     #   llama-index-embeddings-openai
     #   llama-index-indices-managed-llama-cloud
+    #   llama-index-llms-azure-openai
     #   llama-index-llms-openai
     #   llama-index-multi-modal-llms-openai
     #   llama-index-program-openai
@@ -224,22 +225,31 @@ llama-index-core==0.11.10
     #   llama-index-readers-file
     #   llama-index-readers-llama-parse
     #   llama-parse
+llama-index-embeddings-azure-openai==0.2.5
+    # via plumplay-backend (pyproject.toml)
 llama-index-embeddings-openai==0.2.5
     # via
     #   llama-index
     #   llama-index-cli
+    #   llama-index-embeddings-azure-openai
 llama-index-indices-managed-llama-cloud==0.3.1
     # via llama-index
 llama-index-legacy==0.9.48.post3
     # via llama-index
-llama-index-llms-openai==0.2.7
+llama-index-llms-azure-openai==0.2.1
+    # via
+    #   llama-index-embeddings-azure-openai
+    #   plumplay-backend (pyproject.toml)
+llama-index-llms-openai==0.2.9
     # via
     #   llama-index
     #   llama-index-agent-openai
     #   llama-index-cli
+    #   llama-index-llms-azure-openai
     #   llama-index-multi-modal-llms-openai
     #   llama-index-program-openai
     #   llama-index-question-gen-openai
+    #   plumplay-backend (pyproject.toml)
 llama-index-multi-modal-llms-openai==0.2.1
     # via llama-index
 llama-index-program-openai==0.2.0
@@ -257,7 +267,12 @@ llama-parse==0.5.5
 marshmallow==3.22.0
     # via dataclasses-json
 msal==1.31.0
-    # via plumplay-backend (pyproject.toml)
+    # via
+    #   azure-identity
+    #   msal-extensions
+    #   plumplay-backend (pyproject.toml)
+msal-extensions==1.2.0
+    # via azure-identity
 multidict==6.1.0
     # via
     #   aiohttp
@@ -284,10 +299,6 @@ numpy==1.26.4
     #   llama-index-core
     #   llama-index-legacy
     #   pandas
-oauthlib==3.2.2
-    # via
-    #   requests-oauthlib
-    #   social-auth-core
 openai==1.45.1
     # via
     #   llama-index-agent-openai
@@ -308,6 +319,8 @@ pillow==10.4.0
     #   fpdf2
     #   llama-index-core
     #   plumplay-backend (pyproject.toml)
+portalocker==2.10.1
+    # via msal-extensions
 prompt-toolkit==3.0.47
     # via click-repl
 protobuf==5.28.1
@@ -315,7 +328,7 @@ protobuf==5.28.1
     #   dapr
     #   googleapis-common-protos
     #   grpcio-status
-psycopg2==2.9.3
+psycopg2-binary==2.9.9
     # via plumplay-backend (pyproject.toml)
 pycares==4.4.0
     # via aiodns
@@ -333,7 +346,7 @@ pydantic-core==2.23.3
 pyjwt[crypto]==2.9.0
     # via
     #   msal
-    #   social-auth-core
+    #   pyjwt
     #   stream-chat
     #   vital
 pypdf==4.3.1
@@ -348,6 +361,8 @@ python-dateutil==2.9.0.post0
     #   faxplus-api
     #   pandas
     #   svix
+python-dotenv==1.0.1
+    # via plumplay-backend (pyproject.toml)
 python-fsutil==0.14.1
     # via python-benedict
 python-http-client==3.3.7
@@ -358,8 +373,6 @@ python-magic==0.4.27
     # via plumplay-backend (pyproject.toml)
 python-slugify==8.0.4
     # via python-benedict
-python3-openid==3.2.0
-    # via social-auth-core
 pytz==2024.2
     # via
     #   celery
@@ -378,16 +391,11 @@ requests==2.32.3
     #   llama-index-core
     #   llama-index-legacy
     #   msal
-    #   plumplay-backend (pyproject.toml)
     #   python-benedict
-    #   requests-oauthlib
-    #   social-auth-core
     #   stream-chat
     #   stripe
     #   tiktoken
     #   vital
-requests-oauthlib==2.0.0
-    # via social-auth-core
 sendgrid==6.11.0
     # via plumplay-backend (pyproject.toml)
 six==1.16.0
@@ -401,10 +409,6 @@ sniffio==1.3.1
     #   anyio
     #   httpx
     #   openai
-social-auth-app-django==5.4.2
-    # via plumplay-backend (pyproject.toml)
-social-auth-core==4.5.4
-    # via social-auth-app-django
 soupsieve==2.6
     # via beautifulsoup4
 sqlalchemy[asyncio]==2.0.35
@@ -451,13 +455,13 @@ typing-extensions==4.12.2
     #   anyio
     #   asgiref
     #   azure-core
+    #   azure-identity
     #   azure-storage-blob
     #   dapr
     #   llama-index-core
     #   llama-index-legacy
     #   multidict
     #   openai
-    #   plumplay-backend (pyproject.toml)
     #   pydantic
     #   pydantic-core
     #   pypdf

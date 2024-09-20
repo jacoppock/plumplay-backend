@@ -14,6 +14,7 @@ import os
 from pathlib import Path
 
 from dotenv import load_dotenv
+from openai import AsyncAzureOpenAI
 
 load_dotenv()
 
@@ -36,6 +37,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "ai_processor",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -124,7 +126,59 @@ os.makedirs(STATIC_ROOT, exist_ok=True)
 
 print(f"STATIC_ROOT is set to: {STATIC_ROOT}")
 
+# Logging
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "class": "logging.StreamHandler",
+        },
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+        },
+        "ai_processor": {
+            "handlers": ["console"],
+            "level": "DEBUG",
+            "propagate": False,
+        },
+    },
+}
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+CSRF_COOKIE_SECURE = False
+CSRF_USE_SESSIONS = False
+
+MEDPLUM_CLIENT_ID = os.getenv("MEDPLUM_CLIENT_ID", "")
+MEDPLUM_CLIENT_SECRET = os.getenv("MEDPLUM_CLIENT_SECRET", "")
+MEDPLUM_BASE_URL = os.getenv("MEDPLUM_BASE_URL", "https://api.medplum.dev.automated.co/fhir/R4")
+
+AZURE_OPENAI_API_KEY = os.getenv("AZURE_OPENAI_API_KEY", "123")
+AZURE_OPENAI_API_BASE = os.environ.get(
+    "AZURE_OPENAI_API_BASE", "https://bionic-health-openai-eastus-2.openai.azure.com/"
+)
+
+AZURE_OPENAI_API_KEY = os.environ.get("AZURE_OPENAI_API_KEY", "123")
+AZURE_OPENAI_API_VERSION = os.environ.get("AZURE_OPENAI_API_VERSION", "2023-03-15-preview")
+AZURE_OPENAI_MODEL_NAME = os.environ.get("AZURE_OPENAI_MODEL_NAME", "gpt-4o")
+AZURE_OPENAI_MODEL_TEMPERATURE = os.environ.get("AZURE_OPENAI_MODEL_TEMPERATURE", 0)
+AZURE_OPENAI_MODEL_MAX_TOKENS = os.environ.get("AZURE_OPENAI_MODEL_MAX_TOKENS", 800)
+AZURE_OPENAI_MODEL_TOKEN_LIMIT = os.environ.get("AZURE_OPENAI_MODEL_TOKEN_LIMIT", 32768)
+AZURE_OPENAI_DEPLOYMENT_NAME = os.environ.get("AZURE_OPENAI_DEPLOYMENT_NAME", "bionic-health-gpt-4o-structured-output")
+
+ASYNC_AZURE_GPT_CLIENT = AsyncAzureOpenAI(
+    api_key=AZURE_OPENAI_API_KEY,
+    api_version=AZURE_OPENAI_API_VERSION,
+    base_url=f"{AZURE_OPENAI_API_BASE}openai/deployments/{AZURE_OPENAI_DEPLOYMENT_NAME}",
+)
+
+AZURE_OPENAI_EMBEDDING_DEPLOYMENT = os.environ.get("AZURE_OPENAI_EMBEDDING_DEPLOYMENT", "text-embedding-ada-002")
+AZURE_OPENAI_EMBEDDING_MODEL_NAME = os.environ.get(
+    "AZURE_OPENAI_EMBEDDING_MODEL_NAME", "bionic-health-text-embedding-ada-002"
+)
