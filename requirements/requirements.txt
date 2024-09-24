@@ -30,7 +30,9 @@ anyio==4.4.0
 arrow==1.3.0
     # via vital
 asgiref==3.8.1
-    # via django
+    # via
+    #   channels
+    #   django
 async-timeout==4.0.3
     # via aiohttp
 attrs==24.2.0
@@ -66,6 +68,8 @@ cffi==1.17.1
     # via
     #   cryptography
     #   pycares
+channels==4.1.0
+    # via plumplay-backend (pyproject.toml)
 charset-normalizer==3.3.2
     # via requests
 click==8.1.7
@@ -111,6 +115,7 @@ distro==1.9.0
     # via openai
 django==4.2.16
     # via
+    #   channels
     #   django-ckeditor
     #   django-extensions
     #   django-js-asset
@@ -203,6 +208,8 @@ llama-cloud==0.0.17
     # via llama-index-indices-managed-llama-cloud
 llama-index==0.11.10
     # via plumplay-backend (pyproject.toml)
+llama-index-agent-llm-compiler==0.2.0
+    # via plumplay-backend (pyproject.toml)
 llama-index-agent-openai==0.3.1
     # via
     #   llama-index
@@ -212,6 +219,7 @@ llama-index-cli==0.3.1
 llama-index-core==0.11.10
     # via
     #   llama-index
+    #   llama-index-agent-llm-compiler
     #   llama-index-agent-openai
     #   llama-index-cli
     #   llama-index-embeddings-azure-openai
@@ -243,6 +251,7 @@ llama-index-llms-azure-openai==0.2.1
 llama-index-llms-openai==0.2.9
     # via
     #   llama-index
+    #   llama-index-agent-llm-compiler
     #   llama-index-agent-openai
     #   llama-index-cli
     #   llama-index-llms-azure-openai

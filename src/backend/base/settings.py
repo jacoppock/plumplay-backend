@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "ai_processor",
+    "chat",
+    "uvicorn",
+    "channels",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -69,6 +72,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "base.wsgi.application"
 
+# Daphne
+ASGI_APPLICATION = "base.asgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases

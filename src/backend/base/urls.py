@@ -24,4 +24,5 @@ urlpatterns = [
     path("", views.home, name="home"),  # If you have a home view
     path("admin/", admin.site.urls),
     path("ai_processor/", include("ai_processor.urls")),  # Include ai_processor URLs
+    path("chat/", include("chat.urls")),
 ]

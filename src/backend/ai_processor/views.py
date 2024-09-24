@@ -41,7 +41,7 @@ def process_voice_memo(request: HttpRequest) -> JsonResponse:
 
         return JsonResponse({"fhir_resources": out}, status=200)
     else:
-        return JsonResponse({"error": "Invalid request method."}, status=405)
+        return JsonResponse({"error": "POST a voice memo instead."}, status=405)
 
 
 def extract_clinical_data(raw_text: str) -> Dict[str, Any]:
@@ -155,7 +155,7 @@ def calculate_birth_date(age: Optional[str]) -> Optional[str]:
     from datetime import date
 
     try:
-        birth_year: int = date.today().year - int(age)
+        birth_year: int = date.today().year - int(age)  # type: ignore
         return f"{birth_year}-01-01"  # Use January 1st as an approximation
     except (ValueError, TypeError):
         print(f"Invalid age provided: {age}")
@@ -285,3 +285,7 @@ def create_task_and_note_with_llm(
     fhir_resources.append(task_resource)
 
     return fhir_resources
+
+
+def some_view(request: HttpRequest) -> JsonResponse:
+    return JsonResponse({"message": "Welcome to the AI Processor!"})
